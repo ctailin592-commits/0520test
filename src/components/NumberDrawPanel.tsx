@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Binary, Sparkles, Hash, Eye, RefreshCw, Trash2 } from 'lucide-react';
 import { luckyAudio } from '../utils/audio';
+import Confetti from './Confetti';
 
 interface NumberDrawPanelProps {
   onDrawComplete: (numbers: string[]) => void;
@@ -361,41 +362,74 @@ export default function NumberDrawPanel({ onDrawComplete, isDrawingGlobal, setIs
       {/* Modal dialog showcasing draw result */}
       <AnimatePresence>
         {isShowingWinnerModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white w-full max-w-sm rounded-3xl p-6 shadow-xl border border-slate-50 flex flex-col items-center text-center"
-            >
-              <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-4">
-                <Hash className="w-7 h-7" />
-              </div>
-              <p className="text-xs text-slate-400 tracking-wider uppercase font-mono mb-1">幸運之神降臨中獎碼</p>
-              <h4 className="text-xl font-bold text-slate-800 mb-5">選號結果揭曉！🎉</h4>
-
-              {/* Award Numbers display */}
-              <div className="flex flex-wrap gap-3.5 justify-center py-2 px-1 w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 mb-6">
-                {animWinners.map((val, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ scale: 0.6, rotate: -25 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ delay: idx * 0.08, type: 'spring' }}
-                    className="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-600 font-mono text-xl font-bold text-white flex items-center justify-center shadow-md border-2 border-white"
-                  >
-                    {val}
-                  </motion.div>
-                ))}
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
+            <div className="relative w-full max-w-sm flex justify-center items-center">
+              
+              {/* Giant rotating sunburst rays representing victory */}
+              <div className="absolute w-[500px] h-[500px] pointer-events-none opacity-30 animate-spin-slow">
+                <svg viewBox="0 0 200 200" className="w-full h-full text-amber-400">
+                  <path d="M100 0 L105 100 L110 0 Z" fill="currentColor" />
+                  <path d="M200 100 L100 105 L200 110 Z" fill="currentColor" />
+                  <path d="M100 200 L95 100 L90 200 Z" fill="currentColor" />
+                  <path d="M0 100 L100 95 L0 90 Z" fill="currentColor" />
+                  <path d="M29 29 L100 96 L33 33 Z" fill="currentColor" />
+                  <path d="M171 29 L96 100 L167 33 Z" fill="currentColor" />
+                  <path d="M29 171 L100 104 L33 167 Z" fill="currentColor" />
+                  <path d="M171 171 L104 100 L167 167 Z" fill="currentColor" />
+                </svg>
               </div>
 
-              <button
-                onClick={() => setIsShowingWinnerModal(false)}
-                className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl transition-all cursor-pointer"
+              {/* Glowing Ambient light aura */}
+              <div className="absolute w-72 h-72 bg-amber-400/20 blur-3xl pointer-events-none animate-pulse" />
+
+              {/* Confetti sequential burst emitter */}
+              <Confetti />
+
+              <motion.div
+                initial={{ scale: 0.82, y: 30, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 0.82, y: 30, opacity: 0 }}
+                transition={{ type: 'spring', damping: 20 }}
+                className="bg-white w-full rounded-3xl p-6 shadow-2xl border-2 border-amber-400/60 relative z-30 flex flex-col items-center text-center overflow-hidden"
               >
-                收下中獎數字 (關閉)
-              </button>
-            </motion.div>
+                {/* Visual side decorations */}
+                <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-amber-400 via-emerald-400 to-teal-500" />
+                <div className="absolute top-0 right-0 w-2 h-full bg-gradient-to-b from-amber-400 via-emerald-400 to-teal-500" />
+
+                <div className="w-16 h-16 bg-gradient-to-tr from-amber-400 to-amber-600 text-white rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-amber-200 animate-bounce">
+                  <Hash className="w-9 h-9" />
+                </div>
+                
+                <p className="text-[11px] text-amber-600 tracking-widest uppercase font-mono font-bold bg-amber-50 px-3 py-1 rounded-full mb-2">
+                  ✨ LUCKY NUMBER ✨
+                </p>
+                <h4 className="text-xl font-black text-slate-800 tracking-tight mb-5">選號結果揭曉！🎉</h4>
+
+                {/* Award Numbers display */}
+                <div className="flex flex-wrap gap-4.5 justify-center py-4 px-2.5 w-full bg-gradient-to-b from-slate-50 to-slate-100/40 border border-slate-150 rounded-2xl p-4 mb-6 shadow-inner">
+                  {animWinners.map((val, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ scale: 0.6, rotate: -35 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ delay: 0.15 + idx * 0.08, type: 'spring' }}
+                      className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 via-amber-600 to-orange-500 font-mono text-xl font-black text-white flex items-center justify-center shadow-lg border-2 border-white"
+                    >
+                      {val}
+                    </motion.div>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setIsShowingWinnerModal(false)}
+                  className="w-full py-3.5 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-95 cursor-pointer relative overflow-hidden group"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    收下中獎數字
+                  </span>
+                </button>
+              </motion.div>
+            </div>
           </div>
         )}
       </AnimatePresence>

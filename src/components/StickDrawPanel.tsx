@@ -9,6 +9,7 @@ import { Sparkles, RefreshCw, Eye, Scroll } from 'lucide-react';
 import { luckyAudio } from '../utils/audio';
 import { fortunesData } from '../data/fortunes';
 import { FortuneStick } from '../types';
+import Confetti from './Confetti';
 
 interface StickDrawPanelProps {
   onDrawComplete: (stickDetails: string[]) => void;
@@ -239,83 +240,113 @@ export default function StickDrawPanel({ onDrawComplete, isDrawingGlobal, setIsD
       {/* Traditional wood-toned poetic scroll overlay drawer modal */}
       <AnimatePresence>
         {isShowingScroll && drawnStick && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <motion.div
-              initial={{ scale: 0.85, opacity: 0, y: 30 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.85, opacity: 0, y: 30 }}
-              className="bg-[#FDFBF7] text-slate-800 w-full max-w-md rounded-3xl p-6 shadow-2xl border-4 border-[#8B3A3A]/40 flex flex-col items-center relative"
-            >
-              {/* Wooden scroll visual header decorative bar */}
-              <div className="absolute top-0 left-0 right-0 h-3 bg-[#8B3A3A] rounded-t-[14px]" />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+            <div className="relative w-full max-w-md flex justify-center items-center">
               
-              {/* Scroll handles styling */}
-              <div className="absolute -top-1.5 -left-2 w-4 h-6 bg-[#D4AF37] rounded-md shadow-sm" />
-              <div className="absolute -top-1.5 -right-2 w-4 h-6 bg-[#D4AF37] rounded-md shadow-sm" />
-
-              <div className="text-center w-full mt-3 space-y-4">
-                <span className="text-xs font-mono tracking-widest text-[#8B3A3A] font-bold block">
-                  🏯 幸運籤堂 · 靈能詩籤
-                </span>
-                
-                {/* Stick name */}
-                <h4 className="text-2xl font-bold text-slate-800 border-b border-rose-100 pb-2">
-                  {drawnStick.name}
-                </h4>
-
-                {/* Fortune Strength Huge block */}
-                <div className="inline-block px-5 py-2.5 rounded-full border border-[#8B3A3A]/20 bg-[#FDF1F1] text-2xl font-black text-[#8B3A3A] tracking-wider font-sans shadow-inner">
-                  {drawnStick.fortune}
-                </div>
-
-                {/* Poem section with high-contrast text */}
-                <div className="bg-[#FAF6EE] p-5 rounded-2xl border border-[#DCA251]/20 my-4 text-center space-y-2">
-                  <span className="text-[11px] text-[#DCA251] font-mono tracking-widest block font-bold uppercase">
-                    ── 【 籤詩古文 】 ──
-                  </span>
-                  <p className="text-xl font-semibold text-[#8B3A3A] leading-relaxed tracking-wider font-sans antialiased">
-                    {drawnStick.content}
-                  </p>
-                </div>
-
-                {/* Meaning Explanation paragraph */}
-                <div className="text-left space-y-2 max-h-48 overflow-y-auto pr-1">
-                  <span className="text-xs text-slate-400 font-bold block uppercase tracking-wider">
-                    📜 今日吉凶白話釋義：
-                  </span>
-                  <p className="text-sm text-slate-600 leading-relaxed bg-[#FAF6EE]/50 p-3 rounded-xl border border-slate-100 font-sans">
-                    {drawnStick.meaning}
-                  </p>
-                  
-                  {/* Category Details tags */}
-                  <div className="text-xs font-semibold text-rose-700/90 py-1.5 px-2 bg-rose-50/50 rounded-xl leading-relaxed text-center font-mono select-none">
-                    {drawnStick.category}
-                  </div>
-                </div>
-
-                {/* Reset or Draw alternative stick */}
-                <div className="flex gap-2 pt-4 border-t border-slate-100 mt-6 w-full">
-                  <button
-                    onClick={() => {
-                      closeScrollAndReset();
-                      startStickDraw();
-                    }}
-                    className="flex-1 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-500 font-semibold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5"
-                  >
-                    <RefreshCw className="w-3.5 h-3.5" />
-                    重求一籤
-                  </button>
-                  <button
-                    onClick={closeScrollAndReset}
-                    className="flex-1 py-2.5 bg-[#8B3A3A] hover:bg-[#733030] text-white font-semibold text-xs rounded-xl transition-all cursor-pointer"
-                  >
-                    謝天領旨 (關閉)
-                  </button>
-                </div>
-
+              {/* Spinning heavenly light representing spiritual destiny */}
+              <div className="absolute w-[600px] h-[600px] pointer-events-none opacity-20 animate-spin-slow">
+                <svg viewBox="0 0 200 200" className="w-full h-full text-amber-200">
+                  <path d="M100 0 L104 100 L108 0 Z" fill="currentColor" />
+                  <path d="M200 100 L100 104 L200 108 Z" fill="currentColor" />
+                  <path d="M100 200 L96 100 L92 200 Z" fill="currentColor" />
+                  <path d="M0 100 L100 96 L0 92 Z" fill="currentColor" />
+                  <path d="M29 29 L100 96 L33 33 Z" fill="currentColor" />
+                  <path d="M171 29 L96 100 L167 33 Z" fill="currentColor" />
+                  <path d="M29 171 L100 104 L33 167 Z" fill="currentColor" />
+                  <path d="M171 171 L104 100 L167 167 Z" fill="currentColor" />
+                </svg>
               </div>
 
-            </motion.div>
+              {/* Glimmering spiritual ambient light */}
+              <div className="absolute w-80 h-80 bg-orange-400/10 blur-3xl pointer-events-none" />
+
+              {/* Sacred golden sparkle rain particles */}
+              <Confetti />
+
+              <motion.div
+                initial={{ scale: 0.82, opacity: 0, y: 30 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.82, opacity: 0, y: 30 }}
+                transition={{ type: 'spring', damping: 22 }}
+                className="bg-[#FDFBF7] text-slate-800 w-full rounded-3xl p-6 shadow-2xl border-4 border-[#8B3A3A]/60 flex flex-col items-center relative z-20"
+              >
+                {/* Wooden scroll visual header decorative bar */}
+                <div className="absolute top-0 left-0 right-0 h-3 bg-[#8B3A3A] rounded-t-[14px]" />
+                
+                {/* Scroll handles styling */}
+                <div className="absolute -top-1.5 -left-2 w-4 h-6 bg-[#D4AF37] rounded-md shadow-sm" />
+                <div className="absolute -top-1.5 -right-2 w-4 h-6 bg-[#D4AF37] rounded-md shadow-sm" />
+
+                <div className="text-center w-full mt-3 space-y-4">
+                  <span className="text-xs font-mono tracking-widest text-[#8B3A3A] font-bold block bg-amber-50 border border-amber-100/50 py-1.5 px-3 rounded-full">
+                    ⛩️ 幸運籤堂 ‧ 神指靈感
+                  </span>
+                  
+                  {/* Stick name */}
+                  <h4 className="text-2xl font-black text-slate-800 border-b border-rose-100 pb-2">
+                    {drawnStick.name}
+                  </h4>
+
+                  {/* Fortune Strength Huge block */}
+                  <motion.div 
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.1, type: 'spring' }}
+                    className="inline-block px-7 py-3 rounded-2xl border-2 border-dashed border-[#8B3A3A]/30 bg-[#FDF1F1] text-3xl font-black text-[#8B3A3A] tracking-widest font-sans shadow-md"
+                  >
+                    {drawnStick.fortune}
+                  </motion.div>
+
+                  {/* Poem section with high-contrast text */}
+                  <div className="bg-[#FAF6EE] p-5 rounded-2xl border border-[#DCA251]/20 my-4 text-center space-y-2 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-300 to-transparent" />
+                    <span className="text-[11px] text-[#DCA251] font-mono tracking-widest block font-bold uppercase">
+                      ── 【 籤詩古文 】 ──
+                    </span>
+                    <p className="text-xl font-bold text-[#8B3A3A] leading-relaxed tracking-wider font-sans antialiased py-1">
+                      {drawnStick.content}
+                    </p>
+                  </div>
+
+                  {/* Meaning Explanation paragraph */}
+                  <div className="text-left space-y-2 max-h-48 overflow-y-auto pr-1">
+                    <span className="text-xs text-slate-400 font-bold block uppercase tracking-wider">
+                      📜 今日吉凶白話釋義：
+                    </span>
+                    <p className="text-sm text-slate-600 leading-relaxed bg-[#FAF6EE]/50 p-3.5 rounded-xl border border-slate-100 font-sans shadow-inner">
+                      {drawnStick.meaning}
+                    </p>
+                    
+                    {/* Category Details tags */}
+                    <div className="text-xs font-semibold text-rose-700/90 py-1.5 px-2 bg-rose-50/50 rounded-xl leading-relaxed text-center font-mono select-none">
+                      {drawnStick.category}
+                    </div>
+                  </div>
+
+                  {/* Reset or Draw alternative stick */}
+                  <div className="flex gap-2 pt-4 border-t border-slate-100 mt-6 w-full">
+                    <button
+                      onClick={() => {
+                        closeScrollAndReset();
+                        startStickDraw();
+                      }}
+                      className="flex-1 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-500 font-semibold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      重求一籤
+                    </button>
+                    <button
+                      onClick={closeScrollAndReset}
+                      className="flex-1 py-2.5 bg-[#8B3A3A] hover:bg-[#733030] text-white font-semibold text-xs rounded-xl transition-all cursor-pointer"
+                    >
+                      謝天領旨 (關閉)
+                    </button>
+                  </div>
+
+                </div>
+
+              </motion.div>
+            </div>
           </div>
         )}
       </AnimatePresence>

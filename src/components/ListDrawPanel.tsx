@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Trash2, Plus, Sparkles, RefreshCw, Layers, Users, Eye, HelpCircle } from 'lucide-react';
 import { luckyAudio } from '../utils/audio';
+import Confetti from './Confetti';
 
 interface ListDrawPanelProps {
   onDrawComplete: (winners: string[]) => void;
@@ -375,38 +376,85 @@ export default function ListDrawPanel({ onDrawComplete, isDrawingGlobal, setIsDr
       {/* Modal dialog showcasing draw result with standard high consistency */}
       <AnimatePresence>
         {isShowingWinnerModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white w-full max-w-md rounded-3xl p-6 shadow-xl border border-slate-50 flex flex-col items-center text-center"
-            >
-              <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-4">
-                <Sparkles className="w-7 h-7" />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
+            <div className="relative w-full max-w-md flex justify-center items-center">
+              
+              {/* Giant rotating sunburst rays representing victory */}
+              <div className="absolute w-[600px] h-[600px] pointer-events-none opacity-30 animate-spin-slow">
+                <svg viewBox="0 0 200 200" className="w-full h-full text-amber-400">
+                  <path d="M100 0 L105 100 L110 0 Z" fill="currentColor" />
+                  <path d="M200 100 L100 105 L200 110 Z" fill="currentColor" />
+                  <path d="M100 200 L95 100 L90 200 Z" fill="currentColor" />
+                  <path d="M0 100 L100 95 L0 90 Z" fill="currentColor" />
+                  <path d="M29 29 L100 96 L33 33 Z" fill="currentColor" />
+                  <path d="M171 29 L96 100 L167 33 Z" fill="currentColor" />
+                  <path d="M29 171 L100 104 L33 167 Z" fill="currentColor" />
+                  <path d="M171 171 L104 100 L167 167 Z" fill="currentColor" />
+                  <path d="M60 10 L100 98 L65 12 Z" fill="currentColor" />
+                  <path d="M140 10 L100 98 L135 12 Z" fill="currentColor" />
+                  <path d="M190 60 L102 100 L188 65 Z" fill="currentColor" />
+                  <path d="M190 140 L102 100 L188 135 Z" fill="currentColor" />
+                  <path d="M140 190 L100 102 L135 188 Z" fill="currentColor" />
+                  <path d="M60 190 L100 102 L65 188 Z" fill="currentColor" />
+                  <path d="M10 140 L98 100 L12 135 Z" fill="currentColor" />
+                  <path d="M10 60 L98 100 L12 65 Z" fill="currentColor" />
+                </svg>
               </div>
-              <p className="text-xs text-slate-400 tracking-wider uppercase font-mono mb-1">抽籤幸運抽中結果</p>
-              <h4 className="text-xl font-bold text-slate-800 mb-5">恭喜中獎！🎉</h4>
 
-              {/* Award Board */}
-              <div className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 mb-6 space-y-2">
-                {animWinners.map((winner, index) => (
-                  <div key={index} className="flex items-center justify-center gap-2 py-1.5 border-b border-dashed border-slate-150 last:border-0">
-                    <span className="text-xs font-mono font-semibold bg-emerald-100 text-emerald-800 w-5 h-5 rounded-full flex items-center justify-center">
-                      {index + 1}
-                    </span>
-                    <span className="text-lg font-bold text-slate-800">{winner}</span>
-                  </div>
-                ))}
-              </div>
+              {/* Glowing Ambient light aura */}
+              <div className="absolute w-80 h-80 bg-amber-400/20 blur-3xl pointer-events-none animate-pulse" />
 
-              <button
-                onClick={() => setIsShowingWinnerModal(false)}
-                className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl transition-all cursor-pointer"
+              {/* Confetti sequential burst emitter */}
+              <Confetti />
+
+              <motion.div
+                initial={{ scale: 0.82, y: 30, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 0.82, y: 30, opacity: 0 }}
+                transition={{ type: 'spring', damping: 20 }}
+                className="bg-white w-full rounded-3xl p-7 shadow-2xl border-2 border-amber-400/60 relative z-30 flex flex-col items-center text-center overflow-hidden"
               >
-                收下這份幸運 (關閉)
-              </button>
-            </motion.div>
+                {/* Visual side decorations */}
+                <div className="absolute top-0 left-0 w-2.5 h-full bg-gradient-to-b from-amber-400 via-emerald-400 to-teal-500" />
+                <div className="absolute top-0 right-0 w-2.5 h-full bg-gradient-to-b from-amber-400 via-emerald-400 to-teal-500" />
+
+                <div className="w-16 h-16 bg-gradient-to-tr from-amber-400 to-amber-600 text-white rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-amber-200 animate-bounce">
+                  <Sparkles className="w-9 h-9" />
+                </div>
+                
+                <p className="text-[11px] text-amber-600 tracking-widest uppercase font-mono font-bold bg-amber-50 px-3 py-1 rounded-full mb-2">
+                  ✨ LUCKY WINNER ✨
+                </p>
+                <h4 className="text-2xl font-black text-slate-800 tracking-tight mb-5">恭喜中獎！幸運降臨 🎉</h4>
+
+                {/* Award Board with neon-style gradients */}
+                <div className="w-full bg-gradient-to-b from-slate-50 to-slate-100/40 border border-slate-150 rounded-2xl p-5 mb-6 space-y-3 shadow-inner">
+                  {animWinners.map((winner, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 + index * 0.1 }}
+                      className="flex items-center justify-center gap-3.5 py-2.5 border-b border-dashed border-slate-200 last:border-0"
+                    >
+                      <span className="text-sm font-mono font-black bg-gradient-to-tr from-amber-500 to-yellow-400 text-white w-6 h-6 rounded-lg flex items-center justify-center shadow-sm">
+                        {index + 1}
+                      </span>
+                      <span className="text-xl font-extrabold text-[#78350F] tracking-wide">{winner}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setIsShowingWinnerModal(false)}
+                  className="w-full py-3.5 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-95 cursor-pointer relative overflow-hidden group"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    接過這份上天好運
+                  </span>
+                </button>
+              </motion.div>
+            </div>
           </div>
         )}
       </AnimatePresence>
