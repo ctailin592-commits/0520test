@@ -1,0 +1,6 @@
+{
+  "name": "Lucky Draw 抽籤系統",
+  "description": "一個精美、流暢且功能齊全的隨機抽籤與選號系統，支援名單抽、數字抽及互動式籤筒，並具備歷史記錄與音效動畫效果。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
